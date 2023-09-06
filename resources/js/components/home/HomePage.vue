@@ -1,67 +1,60 @@
 <template>
-    <h3 class="text-center mt-5">Game mini</h3>
-    <div>Lông phượng hoàng:{{ feathers }}</div>
-    <div>Đá mặt trăng: {{ diamond }}</div>
-    <h1 class="text-center mt-5" v-if="checkGameOver">Game Over</h1>
-    <button @click="reloadFlip()">
-        Start
-    </button>
-    <div class="container" v-if="flipList != nul">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered" style="background-color: gray;">
-                    <thead>
-                        <!-- <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Column 3</th>
-                            <th>Column 4</th>
-                            <th>Column 5</th>
-                            <th>Column 6</th>
-                        </tr> -->
-                    </thead>
-                    <tbody>
-                        <tr v-for="row in 5" :key="row">
-                            <td v-for="col in 9" :key="col">
-                                <div v-if="flipList[(row - 1) * 9 + col - 1]" class="card"
-                                    :class="{ flipped: flipList[(row - 1) * 9 + col - 1].active > 0 }"
-                                    @click="flipCard((row - 1) * 9 + col - 1)"
-                                    :style="{ backgroundColor: flipList[(row - 1) * 9 + col - 1].color }">
-                                    <div class="front">
-                                    </div>
-                                    <div v-if="flipList[(row - 1) * 9 + col - 1].active == 1" 
-                                        :style="{ backgroundColor: flipList[(row - 1) * 9 + col - 1].color }">
-                                    </div>
-                                    <div v-else-if="flipList[(row - 1) * 9 + col - 1].active == 2" class="back"
-                                        :style="{ backgroundColor: 'black' }">
-                                    </div>
+    <div class="game-thuvientoantri">
+        <h1 class="text-center mt-5" v-if="checkGameOver">Game Over</h1>
+        <button class="btn-start btn btn-primary" @click="reloadFlip()">Bắt đầu</button>
+        <div class="" v-if="flipList != nul">
+            <div class="row justify-content-center align-items-center">
+                <div class="minigame-thuvien">
+                    <div v-for="row in 3" :key="row"  class="row justify-content-center align-items-center">
+                        <div v-for="col in 15" :key="col" class="cell">
+                            <div v-if="flipList[(row - 1) * 15 + col - 1]" class="card mb-0"
+                                :class="{ flipped: flipList[(row - 1) * 15 + col - 1].active > 0,  }"
+                                @click="flipCard((row - 1) * 15 + col - 1)"
+                                :style="{ background: flipList[(row - 1) * 15 + col - 1].color , opacity: flipList[(row - 1) * 15 + col - 1].active == 2 ? '0' : '1' , backgroundImage: backgroundImageUrl(flipList[(row - 1) * 15 + col - 1].type)}">
+                                <div class="front">
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-md-12">
-                <table class="table table-bordered" style="background-color: gray;">
-                    <thead>
-                        <tr>
-                            <th v-for="col in 6">
-                                <div class="card" :class="{ flipped: waiting[col - 1] && waiting[col - 1] > 0 }">
-                                    <div class="front">
-                                    </div>
-                                    <div class="back" :style="{ backgroundColor: cardBackgroundColor(col - 1) }">
-                                    </div>
+                                <div v-if="flipList[(row - 1) * 15 + col - 1].active == 1" 
+                                    :style="{ background: flipList[(row - 1) * 15 + col - 1].color } ">
                                 </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                                <div v-else-if="flipList[(row - 1) * 15 + col - 1].active == 2" class="back"
+                                    :style="{ background: 'black'}">
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="line-break text-center my-3">
+                        <img :src="lineBrealimg" alt="">
+                    </div>
+                </div>
 
-                    </tbody>
-                </table>
+                <div class="cell-wait col-md-6 mt-2">
+                    <p class="font-size-13">Số ô chờ đã fill/số ô chờ tổng&nbsp;<span class="p-1">3/6</span></p>
+                    <div class="row mt-4">
+                        <div class="item-wait" v-for="col in 6">
+                            <div class="card card-wait mb-0 mr-3" :class="{ flipped: waiting[col - 1] && waiting[col - 1] > 0 }">
+                                <div class="front">
+                                </div>
+                                <div class="back" :style="{ backgroundColor: cardBackgroundColor(col - 1) }">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="attribute-items mt-4 d-flex col-md-6 justify-content-end align-items-end">
+                    <div class="div-img items thongbao mr-5" data-aos="fade-down">
+                        <img :src="thongbaoimgUrl" alt="Thông báo" width="">
+                        <span class="font-size-14 text-white">{{ attrThongbao }}</span>
+                    </div>
+                    <div class="div-img items kimcuong mr-5" data-aos="fade-down">
+                        <img :src="kimcuongimgUrl" alt="Thông báo" width="">
+                        <span class="font-size-14 text-white">{{ diamond }}</span>
+                    </div>
+                    <div class="div-img items longvu" data-aos="fade-down">
+                        <img :src="longvuimgUrl" alt="Thông báo" width="">
+                        <span class="font-size-14 text-white">{{ feathers }}</span>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -86,6 +79,14 @@ export default {
             flag: false,
             diamond :0,
             feathers:0,
+            lineBrealimg: '/images/sinhnhat11nam/img_main/line-break.png',
+            thongbaoimgUrl: '/images/sinhnhat11nam/img_main/thongbao.png',
+            kimcuongimgUrl: '/images/sinhnhat11nam/img_main/kimcuong.png',
+            longvuimgUrl: '/images/sinhnhat11nam/img_main/longvu.png',
+            attrThongbao: 340,
+            itemRed: '/images/sinhnhat11nam/img_main/thuvien-itemRed.png',
+            itemYellow: '/images/sinhnhat11nam/img_main/thuvien-itemYellow.png',
+            itemPuple:'/images/sinhnhat11nam/img_main/thuvien-itemPuple.png',
 
         };
     },
@@ -116,6 +117,25 @@ export default {
                 })
                 .finally();
         },
+
+        backgroundImageUrl(type) {
+            if(type == 1){
+                return `url(${this.itemRed})`;
+            }
+            if(type == 2){
+                return `url(${this.itemYellow})`;
+            }
+            if(type == 3){
+                return `url(${this.itemPuple})`;
+            }
+            if(type == 4){
+                return `url(${this.itemRed})`;
+            }
+            if(type == 5){
+                return `url(${this.itemRed})`;
+            }
+        },
+
         getFlip() {
             let token = this.$store.getters.accessToken;
             let gameId = this.$store.getters.gameId;
@@ -286,9 +306,8 @@ export default {
 
                 } else if (this.waiting[col] === 5) {
                     return 'orange';
-
                 } else {
-                    return '';
+                    return 'transparent';
                 }
             };
         }
@@ -355,12 +374,35 @@ export default {
 
 <style>
 .card {
-    width: 40px;
-    height: 40px;
     perspective: 1000px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.5s;
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    min-width: 65px;
+    width: 100%;
+    height: 65px !important;
+    
+    background:
+        linear-gradient(to bottom, #292929, #453d69) padding-box, /*this is your grey background*/
+        linear-gradient(to bottom, #7b5d1c, #a1813f) border-box;
+    transition: all 300ms linear !important;
+}
+
+.game-thuvientoantri .cell{
+    margin-right: 20px;
+    margin-bottom: 30px;
+}
+
+.game-thuvientoantri .cell:nth-child(15n + 0){
+    margin-right: 0px;
+}
+
+.game-thuvientoantri .card{
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
 }
 
 .flipped {
@@ -376,6 +418,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 300ms linear;
 
 }
 
@@ -409,6 +452,34 @@ export default {
 
 .flipped {
     animation: flip 0.5s;
+}
+
+.btn-start{
+    position: absolute;
+    z-index: 5;
+    top: 155px;
+    left: 85px
+}
+
+.attribute-items .div-img{
+    position: relative;
+}
+
+.attribute-items .div-img.items span{
+    position: absolute;
+    bottom: 26px;
+    right: 50%;
+    text-align: center;
+    transform: translate(50%, 0%);
+}
+
+.attribute-items .div-img.items.longvu span{
+    bottom: 28px;
+    transform: translate(60%, 0%);
+}
+
+.attribute-items .div-img img:hover{
+    filter: brightness(140%);
 }
 
 /* ... CSS sau đó ... */

@@ -511,6 +511,11 @@ textarea {
             border: none;
             height: 830px;
             // width: 1472px;
+            .modal-body{
+                padding-top: 14rem;
+                padding-left: 85px;
+                padding-right: 130px;
+            }
         }
     }
 }
@@ -530,6 +535,11 @@ textarea {
             border: none;
             height: 862px;
             // width: 1472px;
+            .modal-body{
+                padding-top: 20rem;
+                padding-left: 7rem;
+                padding-right: 7rem;
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper-content" :style="{ backgroundImage: backgroundImageUrl() }">
+    <div class="wrapper-content" :style="{ backgroundImage:backgroundImageUrl() }">
         <div class="div-content">
             <div class="div-img thap-thanh-tuu" data-aos="fade-down" @click="openModalThapThanhTuu">
                 <img :src="thapthanhtuuimgUrl" alt="Tháp Thành Tựu" width="485">
@@ -7,7 +7,7 @@
             <div class="div-img thu-vien-toan-tri" @click="openModalThuVien" data-aos="fade-right">
                 <img :src="thuvienimgUrl" alt="Thư Viện Toàn Tri" width="295">
             </div>
-            <div class="div-img nha-thi-dau" @click="openModalNhaThiDau" data-aos="fade-up">
+            <div class="div-img nha-thi-dau" data-aos="fade-up">
                 <img :src="nhathidauimgUrl" alt="Nhà Thi Đấu" width="290">
             </div>
             <div class="div-img sanh-hop-hep" data-aos="fade-left">
@@ -31,39 +31,21 @@
             <div class="infor-user d-flex align-items-center justify-content-between">
                 <div class="group-info d-flex align-items-center">
                     <img :src="sanhhophepimgUrl" alt="" class="avatar" width="65" height="65">
-                    <p class="mb-0">&nbsp;Xin chào&nbsp;<strong>{{ user_name }}</strong></p>
+                    <p class="mb-0">&nbsp;Xin chào&nbsp;<strong>{{user_name}}</strong></p>
                 </div>
                 <a href="javascript:void(0)" @click="logoutSubmit" class="logout mb-0 pl-2">Thoát</a>
             </div>
         </div>
         <b-modal v-model="showModalThuVien" id="ThuVienModal" hide-footer centered hide-header>
             <button class="btn-close btn" @click="closeModalThuVien"><img :src="closeimgUrl" alt=""></button>
-            <template #modal-body>
-                <p>tesst thu vieenj</p>
-                <ModalThuVien></ModalThuVien>
-            </template>
-        </b-modal>
-
-        <b-modal v-model="showModalNhaThiDau" id="ThuVienModal" hide-footer centered hide-header>
-            <button class="btn-close btn" @click="closeModalNhaThiDau"><img :src="closeimgUrl" alt=""></button>
-            <template #modal-body>
-                <p>tesst nha thi dau</p>
-                <ModalNhaThiDau></ModalNhaThiDau>
-            </template>
+            <ModalThuVien ></ModalThuVien>
         </b-modal>
         <b-modal v-model="showModalThapThanhTuu" id="ThapThanhTuuModal" hide-footer centered hide-header>
             <button class="btn-close btn" @click="closeModalThapThanhTuu"><img :src="closeimgUrl" alt=""></button>
-            <template #modal-body>
-                <p>Danh sách thành tựu đã đạt được:</p>
-                <ul>
-                    <li>nhiệm vụ 1</li>
-                    <li>nhiệm vụ 2</li>
-                    <li>nhiệm vụ 3</li>
-                </ul>
-                <ModalThapThanhTuu></ModalThapThanhTuu>
-            </template>
+            <ModalThapThanhTuu></ModalThapThanhTuu>
         </b-modal>
     </div>
+    
 </template>
 <!-- <p class="date mt-4 font-size-24 text-white">18/9/2023 - 31/12/2023</p> -->
 <script>
@@ -73,15 +55,13 @@ import 'aos/dist/aos.css';
 
 import ModalThuVien from './modal-detail/thuvien-modal.vue';
 import ModalThapThanhTuu from './modal-detail/thapthanhtuu-modal.vue';
-import ModalNhaThiDau from './modal-detail/nhathidau-modal.vue';
 
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
     components: {
         ModalThuVien,
-        ModalThapThanhTuu,
-        ModalNhaThiDau
+        ModalThapThanhTuu
     },
     data() {
         return {
@@ -100,7 +80,6 @@ export default {
             user_name: "minhtam.nguyen",
             showModalThuVien: false,
             showModalThapThanhTuu: false,
-            showModalNhaThiDau: false,
             attrKimcuong: 67,
             attrLongvu: 15,
             attrThongbao: 340,
@@ -117,7 +96,7 @@ export default {
         });
     },
     computed: {
-
+        
     },
     methods: {
         ...mapActions(["oLogout"]),
@@ -132,21 +111,13 @@ export default {
         openModalThuVien() {
             this.showModalThuVien = true;
         },
-        closeModalThuVien() {
+        closeModalThuVien(){
             this.showModalThuVien = false;
         },
-
-        openModalNhaThiDau() {
-            this.showModalNhaThiDau = true;
-        },
-        closeModalNhaThiDau() {
-            this.showModalNhaThiDau = false;
-        },
-
         openModalThapThanhTuu() {
             this.showModalThapThanhTuu = true;
         },
-        closeModalThapThanhTuu() {
+        closeModalThapThanhTuu(){
             this.showModalThapThanhTuu = false;
         }
     },
@@ -154,7 +125,8 @@ export default {
 </script>
 
 <style scoped>
-.wrapper-content {
+
+.wrapper-content{
     min-height: 100vh;
     height: auto;
     width: 100%;
@@ -167,60 +139,59 @@ export default {
 }
 
 
-.wrapper-content .div-img {
+.wrapper-content .div-img{
     position: absolute;
 }
 
-.wrapper-content .div-img img,
-.banner-name {
+.wrapper-content .div-img img,.banner-name{
     transition: all 300ms linear;
     cursor: pointer;
 }
 
-.wrapper-content .div-img img:hover {
+.wrapper-content .div-img img:hover{
     filter: brightness(140%);
 }
 
-.banner-name:hover {
+.banner-name:hover{
     filter: brightness(120%);
 }
 
-.wrapper-content .div-img.thap-thanh-tuu {
+.wrapper-content .div-img.thap-thanh-tuu{
     top: 50px;
     right: 275px;
-}
+}    
 
-.wrapper-content .div-img.thu-vien-toan-tri {
+.wrapper-content .div-img.thu-vien-toan-tri{
     top: 350px;
     right: 710px;
-}
+} 
 
-.wrapper-content .div-img.nha-thi-dau {
+.wrapper-content .div-img.nha-thi-dau{
     top: 615px;
     right: 525px;
-}
+} 
 
-.wrapper-content .div-img.sanh-hop-hep {
+.wrapper-content .div-img.sanh-hop-hep{
     top: 512px;
     right: 215px;
 }
 
-.wrapper-content .div-img.thongbao {
+.wrapper-content .div-img.thongbao{
     top: 315px;
     right: 135px;
 }
 
-.wrapper-content .div-img.kimcuong {
+.wrapper-content .div-img.kimcuong{
     top: 425px;
     right: 165px;
 }
 
-.wrapper-content .div-img.longvu {
+.wrapper-content .div-img.longvu{
     top: 525px;
     right: 205px;
 }
 
-.wrapper-content .div-img.items span {
+.wrapper-content .div-img.items span{
     position: absolute;
     bottom: 26px;
     right: 50%;
@@ -228,54 +199,52 @@ export default {
     transform: translate(50%, 0%);
 }
 
-.banner-name {
+.banner-name{
     position: absolute;
     top: 650px;
     left: 523px;
 }
 
-.banner-name .infor-user {
+.banner-name .infor-user{
     position: absolute;
     top: 60px;
     left: 45px;
     width: 80%;
 }
 
-.banner-name p,
-.banner-name a {
+.banner-name p,.banner-name a{
     color: #66494e;
     font-size: 16px;
 }
 
-.banner-name a {
+.banner-name a{
     border-left: 2px solid #66494e;
 }
 
-.banner-name img.avatar {
+.banner-name img.avatar{
     border-radius: 50%;
     border: 2.5px solid #ffffff;
 }
 
-button.btn-close {
+button.btn-close{
     position: absolute;
     right: -13px;
     top: 111px;
     transition: all 200ms linear;
 }
 
-button.btn-close:hover {
+button.btn-close:hover{
     filter: brightness(130%);
 }
 
-button.btn-close:focus {
+button.btn-close:focus{
     box-shadow: none;
 }
 
-#ThapThanhTuuModal button.btn-close {
+#ThapThanhTuuModal button.btn-close{
     right: -53px;
     top: 155px;
 }
-
 /* .div-img img.chibi-img{
     position: absolute;
 } */
