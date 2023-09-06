@@ -44,6 +44,7 @@ Route::middleware('auth:api')->get('/logout', [App\Http\Controllers\Auth\LoginCo
 
 Route::middleware('auth:api')->get('/get-flip', [App\Http\Controllers\FlipController::class, 'getFlip'])->name('flip');
 Route::middleware('auth:api')->post('/active-flip', [App\Http\Controllers\FlipController::class, 'activeFlip'])->name('active-flip');
+Route::middleware('auth:api')->post('/active-flip-tvtt', [App\Http\Controllers\FlipController::class, 'activeFlipTvtt'])->name('active-flip-tvtt');
 
 Route::middleware('auth:api')->get('/get-item', [App\Http\Controllers\HomeController::class, 'getItem'])->name('list-item');
 

@@ -28,6 +28,7 @@ Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 
 
 
+Route::get('/thu-vien-toan-tri', [App\Http\Controllers\HomeController::class, 'home'])->name('thu-vien-toan-tri');
 Route::get('/quest', [App\Http\Controllers\HomeController::class, 'quest'])->name('quest');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/launch', [App\Http\Controllers\HomeController::class, 'launch'])->name('launch');

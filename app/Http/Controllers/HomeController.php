@@ -53,7 +53,6 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
-
         $user = $request->user();
         // dump($user);die;
         // gửi thông tin để cập nhật quest:

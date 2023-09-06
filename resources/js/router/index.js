@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../components/home/HomePage.vue';
 import Quest from '../components/home/Quest.vue';
+import ThuVienToanTri from '../components/home/ThuVienToanTri.vue';
 
 import Launch from '../components/sinhnhat11nam/landing-page/Launch.vue';
 
@@ -15,6 +16,7 @@ const ErrorPage = {
 export const routes = [
     { name: 'home', path: '/home', component: HomePage },
     { name: 'quest', path: '/quest', component: Quest },
+    { name: 'thu-vien-toan-tri', path: '/thu-vien-toan-tri', component: ThuVienToanTri },
     {
         path: '/error',
         name: 'error',

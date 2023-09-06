@@ -511,4 +511,86 @@ class FlipController extends Controller
         ];
         return response()->json($response);
     }
+
+    //mở quà thư viện toàn tri
+    public function activeFlipTvtt(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user || $user->diamond < 5) {
+            $response = [
+                "status" => 200,
+                "message" => "lông vũ đã hết!",
+                "data" => ['data_flip' => []],
+                "success" => false
+            ];
+            return response()->json($response);
+        }
+        $this->saveLogItem($user,2,-5,"Tham gia thử thách Tích Kỳ tại Thư Viện Toàn Tri.");
+        $this->saveLogActivity($user,2,"Tham gia thử thách Tích Kỳ tại Thư Viện Toàn Tri.");
+        $user->diamond = $user->diamond - 5;
+        $user->save();
+
+        $itemRandom = [
+            [
+                'item'=> [['item_id'=>1,'record'=>1]],
+                'weight'=>200
+            ],
+            [
+                'item'=> [['item_id'=>1,'record'=>5]],
+                'weight'=>200
+            ],
+            [
+                'item'=> [['item_id'=>1,'record'=>10]],
+                'weight'=>100
+            ],
+            [
+                'item'=> [['item_id'=>2,'record'=>1]],
+                'weight'=>200
+            ],
+            [
+                'item'=> [['item_id'=>2,'record'=>5]],
+                'weight'=>200
+            ],
+            [
+                'item'=> [['item_id'=>2,'record'=>10]],
+                'weight'=>100
+            ],
+        ];
+        $totalWeight = 0;
+        $randomWeight = rand(1, 1000);
+        $listItems = [];
+        foreach ($itemRandom as $element) {
+            $totalWeight = $totalWeight + $element['weight'];
+            if ($totalWeight >=$randomWeight) {
+                $listItems = $element['item'];
+                break;
+            }
+        }
+        foreach ($listItems as $element) {
+            if($element['record']>0){
+                
+                $this->saveLogItem($user,$element['item_id'],$element['record'],"Tham gia thử thách Tích Kỳ tại Thư Viện Toàn Tri.");
+                if($element['item_id'] == 1){
+                    $user->feathers = $user->feathers + $element['record'];
+                }
+                if($element['item_id'] == 2){
+                    $user->diamond = $user->diamond + $element['record'];
+                }
+            }
+            $user->save();
+        }
+
+        $response = [
+            "status" => 200,
+            "message" => "success",
+            "data" => [
+                'user' => $user,
+                'reward' => $listItems
+            ],
+            "success" => true
+        ];
+        return response()->json($response);
+
+    }
 }
