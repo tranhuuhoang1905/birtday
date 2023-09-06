@@ -1,0 +1,4 @@
+node_modules
+.vscode
+vendor
+public/access/js/app.js
